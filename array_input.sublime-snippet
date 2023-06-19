@@ -1,0 +1,14 @@
+<snippet>
+	<content><![CDATA[
+int n;
+cin >> n;
+vector<int> a(n, 0);
+for (int i = 0; i < n; ++i) {
+	cin >> a[i];
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>readarr</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

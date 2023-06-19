@@ -1,0 +1,52 @@
+<snippet>
+	<content><![CDATA[
+
+const int N = 1000001;
+const int maxn = 1000003;
+int facts[maxn];
+int inverse_of_fact[maxn]; 
+ 
+ 
+int ext(int a, int b, int &x, int &y){
+	if(b == 0){
+		x = 1;
+		y = 0;
+		return a;
+	}
+	int tx, ty;
+	int res = ext(b, a%b, tx, ty);
+	x = ty;
+	y = tx - (a / b) * ty;
+	return res;
+}
+ 
+int mod_inverse(int a, int m){
+	int x, y;
+	int g = ext(a, m, x, y);
+	return g == 1 ? (x + m) % m : -1;
+}
+ 
+void precompute(){
+	facts[0] = 1;
+	facts[1] = 1;
+	for (int i = 2; i < maxn; ++i) {
+		facts[i] = ((long long)i * facts[i-1]) % mod;
+	}
+
+	inverse_of_fact[maxn - 1] = mod_inverse(facts[maxn - 1], mod);
+	inverse_of_fact[1] = inverse_of_fact[0] = 1;
+	for (int i = maxn - 2; i > 1; --i) {
+		inverse_of_fact[i] = (inverse_of_fact[i + 1] * (long long)(i + 1ll)) % mod;
+	}
+}
+
+long long ncr(long long n, long long r, long long m = mod){
+	return (((long long)facts[n] * inverse_of_fact[r]) % m * inverse_of_fact[n - r]) % m;
+}
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>binomialcoefficient</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
