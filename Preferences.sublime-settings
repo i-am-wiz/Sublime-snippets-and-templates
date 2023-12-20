@@ -1,0 +1,10 @@
+{
+	"ignored_packages":
+	[
+		"Vintage",
+	],
+	"font_size": 17,
+	"word_wrap": true,
+	"theme": "auto",
+	"index_files": true,
+}

@@ -1,0 +1,17 @@
+<snippet>
+	<content><![CDATA[
+long long power(long long a, long long n, long long m = mod) {
+	long long ans = 1;
+	while (n) {
+		if (n & 1) ans = ans * a % m;
+		a = a * a % m;
+		n >>= 1;
+	}
+	return ans;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>exponentiation</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
