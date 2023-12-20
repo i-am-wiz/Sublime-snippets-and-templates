@@ -1,0 +1,77 @@
+<snippet>
+	<content><![CDATA[
+//maxn defines the constraint on number of vertices
+//logn is represents ceil( log2(maxn) );
+const int MAXN = 10005;
+const int logn = 15;
+int up[MAXN][logn];
+int height[MAXN];
+
+void dfs(vector<vector<int>>& adj, int s, int par = -1) {
+    for (auto c: adj[s]) {
+        if (c == par) continue;
+        height[c] = height[s] + 1;
+        dfs(adj, c, s); 
+    }
+}
+
+int lca(int u, int v) {
+    if (height[u] < height[v]) swap(u, v);
+    int diff = height[u] - height[v];
+    for (int j = logn - 1; ~j; --j) {
+        if (diff & (1 << j)) {
+            u = up[u][j];
+        }
+    }
+    if (u == v) return u;
+    for (int j = logn - 1; ~j; --j) {
+        if (up[u][j] != up[v][j]) {
+            u = up[u][j];
+            v = up[v][j];
+        }
+    }
+    return up[u][0];
+}
+
+void binarylifting(){
+    int n;
+    cin >> n;
+    vector<vector<int>> adj(n);
+    // assumes root as 0, if not change up[root][0] = root and height[root] = 0
+    for (int i = 0; i < n; ++i) {
+        int c;
+        cin >> c;
+        for (int j = 0; j < c; ++j){
+            int x;
+            cin >> x;
+            //assumes x as child of i, this is crucial because i is parent of x and should be reflected as up[x][0] = i
+            adj[i].push_back(x);
+            adj[x].push_back(i);
+            up[x][0] = i;
+        }
+    }
+
+    height[0] = 0;
+    dfs(adj, 0);
+
+    up[0][0] = 0;
+    for (int j = 1; j < logn; ++j) {
+        for (int i = 0; i < n; ++i) {
+            up[i][j] = up[up[i][j - 1]][j - 1];
+        }
+    }
+
+    int q;
+    cin >> q;
+    while (q--) {
+        int u, v;
+        cin >> u >> v;
+        cout << lca(u, v) << nline;
+    }
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>binarylifting</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

@@ -1,0 +1,5 @@
+[
+		{ "keys": ["ctrl+q+p"], "command": "show_panel", "args": {"panel": "incremental_find", "reverse": false} },
+		{ "keys": ["ctrl+q"], "command": "cancel_build" }
+
+]
