@@ -47,7 +47,7 @@ ostream &operator<<(ostream &ostream, const vector<T> &c)
     for (auto &it : c)
         cout << it << " ";
     return ostream;
-}s
+}
 
 void file_i_o() {
     ios_base::sync_with_stdio(0); 
