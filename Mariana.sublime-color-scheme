@@ -1,7 +1,11 @@
+// To use this color scheme, select mariana color scheme first, then customise color scheme and replace the content on right with the content given below
+// This color scheme is best suited with default adaptive dark sublime theme
+// Documentation at https://www.sublimetext.com/docs/color_schemes.html
+
 {
-    "name": "Monokai",
-    "author": "Sublime HQ Pty Ltd, Wimer Hazenberg",
-    "variables":
+	"name": "Mariana",
+    "author": "Sublime HQ Pty Ltd, Dmitri Voronianski",
+	"variables":
     {
         "black": "hsl(0, 0%, 0%)",
         "black2": "hsl(60, 17%, 11%)",
@@ -32,14 +36,14 @@
         "block_caret_border": "color(var(white2) alpha(0.8))",
         "invisibles": "color(var(white3) alpha(0.35))",
         "line_highlight": "var(yellow4)",
-        "selection": "rgb(5,5,5)",
+        "selection": "rgb(50,50,50)",
         "selection_border": "var(black2)",
         "misspelling": "var(red2)",
         "active_guide": "color(var(orange2) alpha(0.69))",
         "find_highlight_foreground": "var(black)",
         "find_highlight": "var(orange3)",
         "brackets_options": "underline",
-        "brackets_foreground": "color(var(white3) alpha(0.65))",
+        "brackets_foreground": "color(yellow)",
         "bracket_contents_options": "underline",
         "bracket_contents_foreground": "color(var(white3) alpha(0.65))",
         "tags_options": "stippled_underline",
