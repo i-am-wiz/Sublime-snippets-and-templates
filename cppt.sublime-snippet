@@ -1,8 +1,13 @@
 <snippet>
 	<content><![CDATA[
 #include<bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
 
 using namespace std;
+using namespace __gnu_pbds;
+typedef __gnu_pbds::tree<int, __gnu_pbds::null_type, less<int>, __gnu_pbds::rb_tree_tag, __gnu_pbds::tree_order_statistics_node_update> ordered_set;
+
 #define ll              long long
 #define infi			INT_MAX
 const long long mod = 1000000007;
@@ -23,15 +28,6 @@ const long long mod = 1000000007;
     #define bug(...) ;
 #endif
 
-template <typename Arg1>
-void __f (const char* name, Arg1&& arg1) {cout << name << " : " << arg1 << endl; }
-template <typename Arg1, typename... Args>
-void __f (const char* names, Arg1&& arg1, Args&&... args)
-{
-	const char* comma = strchr (names + 1, ',');
-	cout.write(names, comma - names) << " : " << arg1 << " | "; __f(comma + 1, args...);
-}
-
 template<typename T1, typename T2> // cin >> pair<T1, T2>
 istream& operator>>(istream &istream, pair<T1,T2> &p){ return (istream >> p.first >> p.second); }
 
@@ -47,6 +43,15 @@ ostream &operator<<(ostream &ostream, const vector<T> &c)
     for (auto &it : c)
         cout << it << " ";
     return ostream;
+}
+
+template <typename Arg1>
+void __f (const char* name, Arg1&& arg1) {cout << name << " : " << arg1 << endl; }
+template <typename Arg1, typename... Args>
+void __f (const char* names, Arg1&& arg1, Args&&... args)
+{
+	const char* comma = strchr (names + 1, ',');
+	cout.write(names, comma - names) << " : " << arg1 << " | "; __f(comma + 1, args...);
 }
 
 void file_i_o() {

@@ -1,63 +1,89 @@
 <snippet>
 	<content><![CDATA[
-const int N = 3e5 + 9;
-int a[N];
+const int N = 3e5 + 5;
 struct SegmentTree {
-
-	int t[4 * N];
-	int n;
-	static const int inf = 1e9;
-
-	SegmentTree() {
-		memset(t, 0, sizeof t);
-	}
-
-	SegmentTree(int _n, int val = 0) {
-		n = _n;
-		for (int i = 0; i < 4 * N; ++i) t[i] = val;
-		build(1, 0, n - 1);
-	}
-
-	void build(int in, int b, int e) {
-		if(b == e){
-		    t[in] = a[b];
-		    return;
-		}
-		int mid = (b + e) >> 1;
-		build(2 * in, b, mid);
-		build(2 * in + 1, mid + 1, e);
-		t[in] = max(t[2 * in], t[2 * in + 1]);
-	}
-
-	void update(int in, int b, int e, int i, int x) {
-		if(b > i || e < i) return;
-		if(b == e && b == i){
-		    t[in] = x;
-		    return;
-		}
-		int mid = (b + e) >> 1;
-		update(2 * in, b, mid, i, x);
-		update(2 * in + 1, mid + 1, e, i, x);
-		t[in] = max(t[2 * in], t[2 * in + 1]);
-	}
-
-	void update(int i, int x) {
-		update(1, 0, n - 1, i, x);
-	}
-
-	int query(int in, int b, int e, int l, int r) {
-		if(b > r || e < l) return -inf;
-		if(b >= l && e <= r) return t[in];
-		int mid = (b + e) >> 1;
-		int L = query(2 * in, b, mid, l, r);
-		int R = query(2 * in + 1, mid + 1, e, l, r);
-		return max(L, R);
-	}
-
-	int query(int l, int r) {
-		return query(1, 0, n - 1, l, r);
-	}
+ 
+    vector<int> t, a;
+    int n;
+ 
+    
+ 
+    SegmentTree(int _n, int val = 0) {
+        n = _n;
+        t.resize(4 * n);
+        a.resize(n);
+        for (int i = 0; i < 4 * n; ++i) t[i] = val;        
+        build(1, 0, n - 1); //assumes input array is 0-indexed
+    }
+ 
+    SegmentTree(vector<int>& v, int val = 0) {
+        n = v.size();
+        t.resize(4 * n);
+        a = v;
+        for (int i = 0; i < 4 * n; ++i) t[i] = val;        
+        build(1, 0, n - 1); //assumes input array is 0-indexed
+    }
+ 
+    //identity element should be such that combine(X, identity_element) = X;
+ 
+    int combine(int a, int b) {
+        return a + b;
+    }
+ 
+    void build(int v, int tl, int tr) {
+        if (tl == tr) {
+            t[v] = a[tl];
+            return;
+        }
+        int tm = tl + (tr - tl) / 2;
+        build(2 * v, tl, tm);
+        build(2 * v + 1, tm + 1, tr);
+        t[v] = combine(t[2 * v], t[2 * v + 1]);
+    }
+ 
+    void update(int v, int tl, int tr, int i, int x) {  
+        if (i < tl or i > tr) return;
+        if (tl == tr) {
+            t[v] = x;
+            return;
+        }
+ 
+        int tm = tl + (tr - tl) / 2;
+        update(2 * v, tl, tm, i, x);
+        update(2 * v + 1, tm + 1, tr, i, x);
+        t[v] = combine(t[2 * v], t[2 * v + 1]);
+    }
+ 
+    void update(int i, int x) {
+        update(1, 0, n - 1, i, x); //assumes input array is 0-indexed
+    }
+ 
+    int query(int v, int tl, int tr, int l, int r) {
+        if (l > r) {
+            return 0; 
+            /* 
+              identity element which when combined with a valid answer won't affect
+              eg., sum + 0 => sum
+              eg., in case of RMQ, identity element is infi, because combining infi 
+              with a answer from other half won't affect the answer when trying to minimise
+            */
+        }
+        if (tl == l and tr == r) {
+            return t[v];
+        }
+ 
+        int tm = tl + (tr - tl) / 2;
+        int L = query(2 * v, tl, tm, l, min(tm, r)); 
+        int R = query(2 * v + 1, tm + 1, tr, max(l, tm + 1), r);
+ 
+        return combine(L, R);
+    }
+ 
+    int query(int l, int r) {
+        return query(1, 0, n - 1, l, r); //assumes input array is 0-indexed
+    }
 };
+
 ]]></content>
 	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
 	<tabTrigger>SegTree</tabTrigger>
